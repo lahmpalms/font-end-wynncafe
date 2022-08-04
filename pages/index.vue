@@ -15,8 +15,49 @@
     <v-container class="brown lighten-4" fluid>
       <ServiceCard></ServiceCard>
       <!-- <v-subheader>{{ type }}</v-subheader> -->
+      <v-row class="mt-2">
+      <v-col>
+      <span style="font-weight:bold"> รายการอาหารทั้งหมด </span>
+      </v-col>
+      </v-row>
+      <v-row>
+        <v-col v-for="(item, index) in getProduct_list" :key="index">
+          <v-card class="mx-auto" max-width="300">
+            <v-img :src="item.product_img" height="200px"></v-img>
+            <v-card-title>
+              {{item.product_name}}
+            </v-card-title>
+
+            <v-card-subtitle>
+              {{item.product_price}} THB
+            </v-card-subtitle>
+
+            <v-card-actions>
+              <v-btn color="orange lighten-2" text>
+                detail
+              </v-btn>
+
+              <v-spacer></v-spacer>
+
+              <v-btn icon @click="show = !show">
+                <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+              </v-btn>
+            </v-card-actions>
+
+            <v-expand-transition>
+              <div v-show="show">
+                <v-divider></v-divider>
+
+                <v-card-text>
+                  {{item.product_detail}}
+                </v-card-text>
+              </div>
+            </v-expand-transition>
+          </v-card>
+        </v-col>
+      </v-row>
+      <!-- <pre> {{ getProduct_list }}</pre> -->
     </v-container>
-    <pre> {{ getProduct_list }}</pre>
   </v-responsive>
 </template>
 
@@ -30,10 +71,11 @@ export default {
     return {
       name: 'Wynn Cafe',
       model: null,
+      show: false,
     }
   },
   computed: {
-    ...mapGetters('products',['getProduct_list'])
+    ...mapGetters('products', ['getProduct_list']),
   },
   async created() {
     await this.getAllProduct()
@@ -56,6 +98,7 @@ export default {
   opacity: 0.5;
   border-color: transparent !important;
 }
+
 .div {
   font-family: 'Kanit-Regular';
 }
