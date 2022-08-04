@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
+const { SERVER_PORT, API_ENDPOINT } = process.env
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -54,7 +55,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: `${API_ENDPOINT}`,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -87,4 +88,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  server: {
+    port: `${SERVER_PORT}`,
+  },
+  
 }

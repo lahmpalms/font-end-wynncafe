@@ -14,8 +14,9 @@
 
     <v-container class="brown lighten-4" fluid>
       <ServiceCard></ServiceCard>
-      <v-subheader>{{ type }}</v-subheader>
+      <!-- <v-subheader>{{ type }}</v-subheader> -->
     </v-container>
+    <pre> {{ getProduct_list }}</pre>
   </v-responsive>
 </template>
 
@@ -23,6 +24,7 @@
 import Sidebar from '~/components/share/sidebar.vue'
 import SlideImage from '~/components/share/slideImage.vue'
 import ServiceCard from '~/components/share/serviceCard.vue'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -30,8 +32,15 @@ export default {
       model: null,
     }
   },
+  computed: {
+    ...mapGetters('products',['getProduct_list'])
+  },
+  async created() {
+    await this.getAllProduct()
+  },
   components: { Sidebar, SlideImage, ServiceCard },
   methods: {
+    ...mapActions('products', ['getAllProduct']),
     getImage() {
       const min = 550
       const max = 560
