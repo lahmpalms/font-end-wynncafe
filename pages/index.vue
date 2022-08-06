@@ -1,63 +1,64 @@
 <template>
-  <v-responsive>
-    <v-toolbar color="brown lighten-3" dark>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title>
-        <v-icon> mdi-coffee-maker-outline</v-icon>
-        <span style="font-weight: bold" class="pl-2"> {{ name }}</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
-    </v-toolbar>
+  <v-responsive class="navbar-top" :aspect-ratio="16 / 9" fluid>
+    <template>
+      <section name="toolsbar">
+        <v-toolbar color="brown lighten-3" dark>
+          <v-app-bar-nav-icon></v-app-bar-nav-icon>
+          <v-toolbar-title>
+            <v-icon> mdi-coffee-maker-outline</v-icon>
+            <span style="font-weight: bold" class="pl-2"> {{ name }}</span>
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </v-toolbar>
+      </section>
+      
+      <v-container class="brown lighten-4" fluid>
+        <ServiceCard></ServiceCard>
+        <v-responsive class="mx-auto pa-2" max-width="1264">
+          <section name="alldrink" v-if="getProduct_list.length">
+            <CardHeader :header="alldrink" :show="true"></CardHeader>
+            <vue-horizontal :button="xs ? false : true">
+              <section class="pa-1" v-for="(item, i) in product_drink" :key="i">
+                <ProductCard :item="item"></ProductCard>
+              </section>
+            </vue-horizontal>
+          </section>
+        </v-responsive>
+      </v-container>
 
-    <v-container class="brown lighten-4" fluid>
-      <ServiceCard></ServiceCard>
-      <!-- <v-subheader>{{ type }}</v-subheader> -->
-      <v-row class="mt-2">
-      <v-col>
-      <span style="font-weight:bold"> รายการอาหารทั้งหมด </span>
-      </v-col>
-      </v-row>
-      <v-row>
-        <v-col v-for="(item, index) in getProduct_list" :key="index">
-          <v-card class="mx-auto" max-width="300">
-            <v-img :src="item.product_img" height="200px"></v-img>
-            <v-card-title>
-              {{item.product_name}}
-            </v-card-title>
+      <v-container class="brown lighten-4" fluid>
+        <v-responsive class="mx-auto pa-2" max-width="1264">
+          <section name="allproduct" v-if="getProduct_list.length">
+            <CardHeader :header="allproduct" :show="true"></CardHeader>
+            <vue-horizontal :button="xs ? false : true">
+              <section class="pa-1" v-for="(item, i) in product_food" :key="i">
+                <ProductCard :item="item"></ProductCard>
+              </section>
+            </vue-horizontal>
+          </section>
+        </v-responsive>
+      </v-container>
 
-            <v-card-subtitle>
-              {{item.product_price}} THB
-            </v-card-subtitle>
-
-            <v-card-actions>
-              <v-btn color="orange lighten-2" text>
-                detail
-              </v-btn>
-
-              <v-spacer></v-spacer>
-
-              <v-btn icon @click="show = !show">
-                <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-              </v-btn>
-            </v-card-actions>
-
-            <v-expand-transition>
-              <div v-show="show">
-                <v-divider></v-divider>
-
-                <v-card-text>
-                  {{item.product_detail}}
-                </v-card-text>
-              </div>
-            </v-expand-transition>
-          </v-card>
-        </v-col>
-      </v-row>
-      <!-- <pre> {{ getProduct_list }}</pre> -->
-    </v-container>
+      <v-container class="brown lighten-4" fluid>
+        <v-responsive class="mx-auto pa-2" max-width="1264">
+          <section name="alldessert" v-if="getProduct_list.length">
+            <CardHeader :header="alldessert" :show="true"></CardHeader>
+            <vue-horizontal :button="xs ? false : true">
+              <section
+                class="pa-1"
+                v-for="(item, i) in product_dessert"
+                :key="i"
+              >
+                <ProductCard :item="item"></ProductCard>
+              </section>
+            </vue-horizontal>
+          </section>
+        </v-responsive>
+      </v-container>
+    </template>
   </v-responsive>
 </template>
 
@@ -66,21 +67,55 @@ import Sidebar from '~/components/share/sidebar.vue'
 import SlideImage from '~/components/share/slideImage.vue'
 import ServiceCard from '~/components/share/serviceCard.vue'
 import { mapActions, mapGetters } from 'vuex'
+import CardHeader from '~/components/itemCard/cardHeader.vue'
+import ProductCard from '~/components/itemCard/productCard.vue'
 export default {
   data() {
     return {
       name: 'Wynn Cafe',
       model: null,
       show: false,
+      allproduct: 'รายการอาหาร',
+      alldrink: 'รายการเครื่องดื่ม',
+      alldessert: 'รายการของหวาน',
     }
   },
   computed: {
     ...mapGetters('products', ['getProduct_list']),
+    xs() {
+      return this.$vuetify.breakpoint.xs
+    },
+    product_food() {
+      const food = this.getProduct_list.filter(
+        (x) => x.product_types == 'อาหาร'
+      )
+      return food
+    },
+    product_drink() {
+      const drink = this.getProduct_list.filter(
+        (x) => x.product_types == 'เครื่องดื่ม'
+      )
+      return drink
+    },
+    product_dessert() {
+      const dessert = this.getProduct_list.filter(
+        (x) => x.product_types == 'ของหวาน'
+      )
+      return dessert
+    },
   },
   async created() {
     await this.getAllProduct()
   },
-  components: { Sidebar, SlideImage, ServiceCard },
+  components: {
+    Sidebar,
+    SlideImage,
+    ServiceCard,
+    ProductCard,
+    CardHeader,
+    ProductCard,
+    ServiceCard,
+  },
   methods: {
     ...mapActions('products', ['getAllProduct']),
     getImage() {
