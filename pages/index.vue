@@ -1,25 +1,16 @@
 <template>
   <v-responsive class="navbar-top" :aspect-ratio="16 / 9" fluid>
+    <Sidebar></Sidebar>
     <template>
-      <section name="toolsbar">
-        <v-toolbar color="brown lighten-3" dark>
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
-          <v-toolbar-title>
-            <v-icon> mdi-coffee-maker-outline</v-icon>
-            <span style="font-weight: bold" class="pl-2"> {{ name }}</span>
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon>
-            <v-icon>mdi-account</v-icon>
-          </v-btn>
-        </v-toolbar>
-      </section>
-      
       <v-container class="brown lighten-4" fluid>
         <ServiceCard></ServiceCard>
         <v-responsive class="mx-auto pa-2" max-width="1264">
           <section name="alldrink" v-if="getProduct_list.length">
-            <CardHeader :header="alldrink" :show="true"></CardHeader>
+            <CardHeader
+              :header="alldrink"
+              :show="true"
+              :route="`/product/drinks`"
+            ></CardHeader>
             <vue-horizontal :button="xs ? false : true">
               <section class="pa-1" v-for="(item, i) in product_drink" :key="i">
                 <ProductCard :item="item"></ProductCard>
@@ -32,7 +23,7 @@
       <v-container class="brown lighten-4" fluid>
         <v-responsive class="mx-auto pa-2" max-width="1264">
           <section name="allproduct" v-if="getProduct_list.length">
-            <CardHeader :header="allproduct" :show="true"></CardHeader>
+            <CardHeader :header="allproduct" :show="true" :route="`/product/food`"></CardHeader>
             <vue-horizontal :button="xs ? false : true">
               <section class="pa-1" v-for="(item, i) in product_food" :key="i">
                 <ProductCard :item="item"></ProductCard>
@@ -45,7 +36,7 @@
       <v-container class="brown lighten-4" fluid>
         <v-responsive class="mx-auto pa-2" max-width="1264">
           <section name="alldessert" v-if="getProduct_list.length">
-            <CardHeader :header="alldessert" :show="true"></CardHeader>
+            <CardHeader :header="alldessert" :show="true" :route="`/product/desserts`"></CardHeader>
             <vue-horizontal :button="xs ? false : true">
               <section
                 class="pa-1"
@@ -78,6 +69,8 @@ export default {
       allproduct: 'รายการอาหาร',
       alldrink: 'รายการเครื่องดื่ม',
       alldessert: 'รายการของหวาน',
+      drawer: false,
+      group: null,
     }
   },
   computed: {
@@ -113,8 +106,7 @@ export default {
     ServiceCard,
     ProductCard,
     CardHeader,
-    ProductCard,
-    ServiceCard,
+    Sidebar,
   },
   methods: {
     ...mapActions('products', ['getAllProduct']),
@@ -123,6 +115,10 @@ export default {
       const max = 560
 
       return Math.floor(Math.random() * (max - min + 1)) + min
+    },
+    next(path) {
+      console.log(path)
+      this.$router.push(path)
     },
   },
 }
