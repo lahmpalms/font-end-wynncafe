@@ -10,6 +10,9 @@
       <v-btn icon>
         <v-icon>mdi-account</v-icon>
       </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-cart</v-icon>
+      </v-btn>
     </v-toolbar>
     <v-navigation-drawer v-model="drawer" absolute bottom temporary>
       <v-list nav dense>
