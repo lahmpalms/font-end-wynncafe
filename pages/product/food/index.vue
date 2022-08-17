@@ -25,17 +25,12 @@
                     </v-btn>
 
                     <v-spacer></v-spacer>
+                    <v-btn @click="showdetail()">
+                      <v-icon>
+                        mdi-circle
+                      </v-icon>
+                    </v-btn>
                   </v-card-actions>
-
-                  <v-expand-transition>
-                    <div v-show="show">
-                      <v-divider></v-divider>
-
-                      <v-card-text>
-                        {{ item.product_detail }}
-                      </v-card-text>
-                    </div>
-                  </v-expand-transition>
                 </v-card>
               </v-col>
             </v-row>

@@ -29,6 +29,10 @@
           <v-list-item @click="next('/product/desserts')">
             <v-list-item-title>ของหวาน</v-list-item-title>
           </v-list-item>
+
+          <v-list-item @click="next('/admin')">
+            <v-list-item-title>เมนูพนักงาน</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
