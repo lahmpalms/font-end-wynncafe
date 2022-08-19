@@ -19,7 +19,7 @@
         </span>
         <v-row>
           <v-col>
-            <v-icon small> mdi-cart </v-icon>
+            <v-icon smal> mdi-list-box-outline </v-icon>
           </v-col>
         </v-row>
       </div>
@@ -42,6 +42,8 @@ export default {
       model: null,
     }
   },
+  methods: {
+  }
 }
 </script>
 
