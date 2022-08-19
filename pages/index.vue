@@ -49,6 +49,10 @@
           </section>
         </v-responsive>
       </v-container>
+      {{cartNumber}}
+      <v-btn @click="test()">
+        test count
+      </v-btn>
     </template>
   </v-responsive>
 </template>
@@ -71,6 +75,7 @@ export default {
       alldessert: 'รายการของหวาน',
       drawer: false,
       group: null,
+      cartNumber: 0
     }
   },
   computed: {
@@ -116,10 +121,9 @@ export default {
 
       return Math.floor(Math.random() * (max - min + 1)) + min
     },
-    next(path) {
-      console.log(path)
-      this.$router.push(path)
-    },
+    test() {
+      this.cartNumber ++
+    }
   },
 }
 </script>

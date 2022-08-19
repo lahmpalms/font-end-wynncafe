@@ -15,7 +15,7 @@
         >
           <v-avatar
             :size="$vuetify.breakpoint.xs ? '65' : '100'"
-            @click.stop="item.active ? fn_route(item.title, item.route) : false"
+            @click.stop="item.active ? fn_route(item.route) : false"
           >
             <v-img :src="item.imgSrc"></v-img>
           </v-avatar>
@@ -34,25 +34,30 @@ export default {
       menuList: [
         {
           imgSrc: require('@/assets/img/cover.jpg'),
-          route: 'hostal',
+          route: '/product/drinks',
           title: 'เครื่องดื่ม',
-          active: false,
+          active: true,
         },
         {
           imgSrc: require('@/assets/img/cover.jpg'),
-          route: 'package',
+          route: '/product/desserts',
           title: 'ของหวาน',
-          active: false,
+          active: true,
         },
         {
           imgSrc: require('@/assets/img/cover.jpg'),
-          route: 'car',
+          route: '/product/food',
           title: 'อาหาร',
-          active: false,
+          active: true,
         },
       ],
     }
   },
+  methods: {
+    fn_route(url){
+      window.location = (url)
+    }
+  }
 }
 </script>
 

@@ -7,7 +7,7 @@
           <v-responsive class="mx-auto pa-2" max-width="1264">
             <v-row>
               <v-col cols="3" v-for="(item, i) in product_drink" :key="i">
-                <v-card class="mx-auto" max-width="344">
+                <v-card class="mx-auto brown lighten-5" max-width="344">
                   <v-img
                     :src="item.product_img"
                     height="200"

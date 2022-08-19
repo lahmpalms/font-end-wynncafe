@@ -7,11 +7,8 @@
           <v-responsive class="mx-auto pa-2" max-width="1264">
             <v-row>
               <v-col cols="3" v-for="(item, i) in product_food" :key="i">
-                <v-card class="mx-auto" max-width="344">
-                  <v-img
-                    :src="item.product_img"
-                    height="200"
-                  ></v-img>
+                <v-card class="mx-auto brown lighten-5" max-width="344">
+                  <v-img :src="item.product_img" height="200"></v-img>
 
                   <v-card-title> {{ item.product_name }} </v-card-title>
 
@@ -25,12 +22,17 @@
                     </v-btn>
 
                     <v-spacer></v-spacer>
-                    <v-btn @click="showdetail()">
-                      <v-icon>
-                        mdi-circle
-                      </v-icon>
-                    </v-btn>
                   </v-card-actions>
+
+                  <v-expand-transition>
+                    <div v-show="show">
+                      <v-divider></v-divider>
+
+                      <v-card-text>
+                        {{ item.product_detail }}
+                      </v-card-text>
+                    </div>
+                  </v-expand-transition>
                 </v-card>
               </v-col>
             </v-row>
@@ -40,7 +42,6 @@
     </v-responsive>
   </div>
 </template>
-
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import ProductCard from '~/components/itemCard/productCard.vue'
