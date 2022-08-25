@@ -19,7 +19,7 @@
         </span>
         <v-row>
           <v-col>
-            <v-icon smal> mdi-list-box-outline </v-icon>
+            <v-icon dense @click="productDetail(item._id)"> mdi-list-box-outline </v-icon>
           </v-col>
         </v-row>
       </div>
@@ -43,6 +43,10 @@ export default {
     }
   },
   methods: {
+    productDetail(prd_id) {
+      console.log(prd_id);
+      this.$router.push(`/product/${prd_id}`)
+    }
   }
 }
 </script>

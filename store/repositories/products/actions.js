@@ -1,4 +1,4 @@
-import { SET_PRODUCT_LIST } from './mutations'
+import { SET_PRODUCT_LIST,SET_PRODUCT_DETAIL } from './mutations'
 
 export default {
   async getAllProduct ( { commit }, payload) {
@@ -16,6 +16,16 @@ export default {
       console.log(response);
     } catch (error) {
       console.log(error);
+    }
+  },
+  async getProductDetail ( { commit }, id ) {
+    try {
+      const response = await this.$axios.get(`/products/${id}`)
+      const { data: obj } = response.data
+      commit(SET_PRODUCT_DETAIL, obj)
+    } catch (error) {
+      console.log(error);
+      commit(SET_PRODUCT_DETAIL, {})
     }
   }
 }

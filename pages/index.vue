@@ -49,10 +49,10 @@
           </section>
         </v-responsive>
       </v-container>
-      {{cartNumber}}
+      <!-- {{cartNumber}}
       <v-btn @click="test()">
         test count
-      </v-btn>
+      </v-btn> -->
     </template>
   </v-responsive>
 </template>
