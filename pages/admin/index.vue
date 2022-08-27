@@ -67,7 +67,19 @@
                       :items="getProduct_list"
                       :items-per-page="20"
                       class="elevation-1"
-                    ></v-data-table>
+                    >
+                      <template v-slot:[`item.actions`]="{ item }">
+                        <v-icon
+                          color="warning"
+                          v-text="'mdi-text-box-edit-outline'"
+                          @click="editProduct(item._id)"
+                        ></v-icon>
+                        <v-icon
+                          color="error"
+                          v-text="'mdi-trash-can-outline'"
+                        ></v-icon>
+                      </template>
+                    </v-data-table>
                   </v-col>
                 </v-row>
               </v-responsive>
@@ -158,12 +170,14 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <DialogProductEdit :dialogEditProduct="dialogEditProduct" :detail="getProduct_detail" @close="dialogEditProduct = false"></DialogProductEdit>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Sidebar from '~/components/share/sidebar.vue'
+import DialogProductEdit from '../../components/dialog/dialogProductEdit.vue'
 export default {
   data() {
     return {
@@ -172,6 +186,7 @@ export default {
       product_types_select: ['อาหาร', 'เครื่องดื่ม', 'ของหวาน'],
       page: 1,
       dialogAddProduct: false,
+      dialogEditProduct: false,
       product_name: '',
       product_types: '',
       product_price: '',
@@ -189,18 +204,26 @@ export default {
         { text: 'ประเภทสินค้า', value: 'product_types' },
         { text: 'ราคาสินค้า', value: 'product_price' },
         { text: 'จำนวนสินค้า', value: 'product_amount' },
+        { text: 'Actions', value: 'actions' },
       ],
     }
   },
-  components: { Sidebar },
+  components: { Sidebar, DialogProductEdit },
   async created() {
     await this.getAllProduct()
   },
   computed: {
-    ...mapGetters('products', ['getProduct_list']),
+    ...mapGetters('products', ['getProduct_list', 'getProduct_detail']),
+    detail() {
+      return this.getProduct_detail
+    }
   },
   methods: {
-    ...mapActions('products', ['createProduct', 'getAllProduct']),
+    ...mapActions('products', [
+      'createProduct',
+      'getAllProduct',
+      'getProductDetail',
+    ]),
     selectePage(value) {
       this.page = value
     },
@@ -225,6 +248,12 @@ export default {
         })
       })
       this.dialogAddProduct = false
+    },
+    async editProduct(id) {
+      console.log(id)
+      await this.getProductDetail(id)
+      console.log(this.getProduct_detail)
+      this.dialogEditProduct = true
     },
   },
 }
