@@ -33,19 +33,19 @@ export default {
     return {
       menuList: [
         {
-          imgSrc: require('@/assets/img/cover.jpg'),
+          imgSrc: 'https://www.img.in.th/images/bc053ea10f5aaafa0568203ae277af13.png',
           route: '/product/drinks',
           title: 'เครื่องดื่ม',
           active: true,
         },
         {
-          imgSrc: require('@/assets/img/cover.jpg'),
+          imgSrc: 'https://www.img.in.th/images/6a0cc89850eb7a6ae3345970852021dc.png',
           route: '/product/desserts',
           title: 'ของหวาน',
           active: true,
         },
         {
-          imgSrc: require('@/assets/img/cover.jpg'),
+          imgSrc: 'https://www.img.in.th/images/c54fc40b8de243acc37595fa63641b13.png',
           route: '/product/food',
           title: 'อาหาร',
           active: true,
