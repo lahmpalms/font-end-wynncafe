@@ -28,6 +28,16 @@ export default {
     }
   },
 
+  async deleteProduct ( { commit }, id) {
+    try {
+      console.log(id);
+      const response = await this.$axios.delete(`/products/${id}`)
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   async getProductDetail ( { commit }, id ) {
     try {
       const response = await this.$axios.get(`/products/${id}`)

@@ -77,6 +77,7 @@
                         <v-icon
                           color="error"
                           v-text="'mdi-trash-can-outline'"
+                          @click="deleteDialog(item._id)"
                         ></v-icon>
                       </template>
                     </v-data-table>
@@ -170,7 +171,11 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <DialogProductEdit :dialogEditProduct="dialogEditProduct" :detail="getProduct_detail" @close="dialogEditProduct = false"></DialogProductEdit>
+    <DialogProductEdit
+      :dialogEditProduct="dialogEditProduct"
+      :detail="getProduct_detail"
+      @close="dialogEditProduct = false"
+    ></DialogProductEdit>
   </div>
 </template>
 
@@ -216,13 +221,14 @@ export default {
     ...mapGetters('products', ['getProduct_list', 'getProduct_detail']),
     detail() {
       return this.getProduct_detail
-    }
+    },
   },
   methods: {
     ...mapActions('products', [
       'createProduct',
       'getAllProduct',
       'getProductDetail',
+      'deleteProduct',
     ]),
     selectePage(value) {
       this.page = value
@@ -254,6 +260,31 @@ export default {
       await this.getProductDetail(id)
       console.log(this.getProduct_detail)
       this.dialogEditProduct = true
+    },
+    async deleteDialog(id) {
+      this.$swal({
+        title: 'ยืนยันการลบสินค้า',
+        icon: 'question',
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: 'red',
+        confirmButtonText: ' ยืนยัน ',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await this.deleteProduct(id).then(() => {
+            this.$swal({
+              title: 'สำเร็จ',
+              text: 'ดำเนินการลบสินค้าสำเร็จ',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 3000,
+            }).then(function () {
+              window.location = '/admin'
+            })
+          })
+        }
+      })
+      console.log('delete id', id)
     },
   },
 }
