@@ -2,7 +2,7 @@
   <v-responsive class="navbar-top" :aspect-ratio="16 / 9" fluid>
     <Sidebar></Sidebar>
     <template>
-      <v-container class="brown lighten-4" fluid>
+      <v-container class="teal lighten-4" fluid>
         <ServiceCard class="mt-2"></ServiceCard>
         <v-responsive class="mx-auto pa-2" max-width="1264">
           <section name="alldrink" v-if="getProduct_list.length">
@@ -20,10 +20,14 @@
         </v-responsive>
       </v-container>
 
-      <v-container class="brown lighten-4" fluid>
+      <v-container class="teal lighten-4" fluid>
         <v-responsive class="mx-auto pa-2" max-width="1264">
           <section name="allproduct" v-if="getProduct_list.length">
-            <CardHeader :header="allproduct" :show="true" :route="`/product/food`"></CardHeader>
+            <CardHeader
+              :header="allproduct"
+              :show="true"
+              :route="`/product/food`"
+            ></CardHeader>
             <vue-horizontal :button="xs ? false : true">
               <section class="pa-1" v-for="(item, i) in product_food" :key="i">
                 <ProductCard :item="item"></ProductCard>
@@ -33,10 +37,14 @@
         </v-responsive>
       </v-container>
 
-      <v-container class="brown lighten-4" fluid>
+      <v-container class="teal lighten-4" fluid>
         <v-responsive class="mx-auto pa-2" max-width="1264">
           <section name="alldessert" v-if="getProduct_list.length">
-            <CardHeader :header="alldessert" :show="true" :route="`/product/desserts`"></CardHeader>
+            <CardHeader
+              :header="alldessert"
+              :show="true"
+              :route="`/product/desserts`"
+            ></CardHeader>
             <vue-horizontal :button="xs ? false : true">
               <section
                 class="pa-1"
@@ -75,7 +83,7 @@ export default {
       alldessert: 'รายการของหวาน',
       drawer: false,
       group: null,
-      cartNumber: 0
+      cartNumber: 0,
     }
   },
   computed: {
@@ -122,8 +130,8 @@ export default {
       return Math.floor(Math.random() * (max - min + 1)) + min
     },
     test() {
-      this.cartNumber ++
-    }
+      this.cartNumber++
+    },
   },
 }
 </script>

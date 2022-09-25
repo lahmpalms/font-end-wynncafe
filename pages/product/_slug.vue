@@ -2,9 +2,9 @@
   <v-responsive class="navbar-top brown lighten-4" :aspect-ratio="16 / 9" fluid>
     <Sidebar></Sidebar>
     <template>
-      <v-container class="brown lighten-4" fluid>
+      <v-container class="teal lighten-4" fluid>
         <v-row class="d-flex justify-center text-center" align="center">
-          <v-col class="text-center">
+          <v-col class="text-center ">
             <span style="font-weight: bold; font-size: 50px; color: black">
               {{ item.product_name }}
             </span>
@@ -12,14 +12,20 @@
         </v-row>
         <v-row class="d-flex justify-center text-center" align="center">
           <v-col class="text-center">
-            <v-card class="mx-auto brown lighten-5" max-width="500">
+            <v-card class="mx-auto teal darken-3" max-width="500">
               <v-img :src="item.product_img" height="400" width=""></v-img>
-              <v-card-title> {{ item.product_name }} </v-card-title>
-              <v-card-subtitle>
+              <v-card-title class="white--text">
+                {{ item.product_name }}
+              </v-card-title>
+              <v-card-subtitle class="white--text">
                 ราคา {{ item.product_price }} บาท
               </v-card-subtitle>
               <v-card-actions>
-                <v-btn color="success" outlined rounded @click="addToCart(item._id)">
+                <v-btn
+                  color="success"
+                  rounded
+                  @click="addToCart(item._id)"
+                >
                   <v-icon> mdi-cart </v-icon>
                   ADD TO CART
                 </v-btn>
@@ -30,7 +36,7 @@
                 <div v-show="true">
                   <v-divider></v-divider>
 
-                  <v-card-text>
+                  <v-card-text class="white--text">
                     {{ item.product_detail }}
                   </v-card-text>
                 </div>
@@ -52,7 +58,7 @@ export default {
   data() {
     return {
       cart: [],
-      amount: 1
+      amount: 1,
     }
   },
   created() {
@@ -73,19 +79,18 @@ export default {
     addToCart(id) {
       console.log(id)
       const data = {
-        _id : id,
-        amount: this.amount
+        _id: id,
+        amount: this.amount,
       }
-      if ( data._id == data._id ) {
-        this.amount ++
+      if (data._id == data._id) {
+        this.amount++
         this.cart.push(data)
       }
-      console.log(this.cart);
+      console.log(this.cart)
     },
   },
   components: { Sidebar },
 }
 </script>
 
-<style>
-</style>
+<style></style>

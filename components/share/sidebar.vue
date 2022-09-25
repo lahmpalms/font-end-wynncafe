@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-toolbar color="brown lighten-3" dark>
+    <v-toolbar color="teal" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <v-icon> mdi-coffee-maker-outline</v-icon>

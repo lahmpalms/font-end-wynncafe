@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="transition-swing card mx-auto rounded-xl"
+    class="transition-swing card mx-auto rounded-xl teal lighten-3"
     :width="$vuetify.breakpoint.xs ? '300' : '500'"
     :height="$vuetify.breakpoint.xs ? '120' : '160'"
     outlined
@@ -63,7 +63,6 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  background: #EFEBE9;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 28px;
 }

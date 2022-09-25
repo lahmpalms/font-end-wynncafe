@@ -3,41 +3,58 @@
     <v-responsive class="navbar-top" :aspect-ratio="16 / 9" fluid>
       <Sidebar />
       <template>
-        <v-container class="brown lighten-4" fluid>
-          <v-responsive class="mx-auto pa-2" max-width="1264">
-            <v-row>
-              <v-col class="d-flex">
-                <v-bottom-navigation
-                  class="brown lighten-4"
-                  color="primary"
-                  horizontal
-                >
-                  <v-btn @click="selectePage(1)">
-                    <span>Manage Product</span>
-                    <v-icon>mdi-food</v-icon>
-                  </v-btn>
-
-                  <v-btn @click="selectePage(2)" disabled>
-                    <span>Favorites</span>
-
-                    <v-icon>mdi-heart</v-icon>
-                  </v-btn>
-
-                  <v-btn @click="selectePage(3)" disabled>
-                    <span>Nearby</span>
-
-                    <v-icon>mdi-map-marker</v-icon>
-                  </v-btn>
-                </v-bottom-navigation>
-              </v-col>
-            </v-row>
-          </v-responsive>
-          <div v-if="page === 1">
-            <v-container class="brown lighten-4" fluid>
+        <v-container class="teal lighten-4" fluid>
+          <div>
+            <v-container class="teal lighten-2" fluid>
               <v-responsive class="mx-auto pa-2" max-width="1264">
+                <!-- จัดการคำสั่งซื้อ -->
                 <v-row>
                   <v-col>
-                    <h1>จัดการสินค้า</h1>
+                    <h1 class="white--text">จัดการคำสั่งซื้อ</h1>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-card>
+                      <v-card-title
+                        ><v-text-field
+                          v-model="searchOrders"
+                          label="ค้นหา"
+                          single-line
+                          hide-details
+                        ></v-text-field
+                      ></v-card-title>
+                      <v-data-table
+                        :search="searchOrders"
+                        :headers="headersOrders"
+                        :items="getOrderslist"
+                        :items-per-page="20"
+                        class="elevation-1"
+                      >
+                        <template v-slot:[`item.createdAt`]="{ item }">
+                          {{ item.createdAt | formatDate }}
+                        </template>
+                        <template v-slot:[`item.actions`]="{ item }">
+                          <v-icon
+                            color="warning"
+                            v-text="'mdi-text-box-edit-outline'"
+                            @click="editProduct(item._id)"
+                          ></v-icon>
+                          <v-icon
+                            color="error"
+                            v-text="'mdi-trash-can-outline'"
+                            @click="deleteDialog(item._id)"
+                          ></v-icon>
+                        </template>
+                      </v-data-table>
+                    </v-card>
+                  </v-col>
+                </v-row>
+
+                <!-- จัดการสินค้า -->
+                <v-row>
+                  <v-col>
+                    <h1 class="white--text">จัดการสินค้า</h1>
                   </v-col>
                   <v-col cols="auto">
                     <v-btn
@@ -50,37 +67,37 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12">
-                    <v-text-field
-                      v-model="search"
-                      label="ค้นหา"
-                      rounded
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row>
                   <v-col>
-                    <v-data-table
-                      :search="search"
-                      :headers="headers"
-                      :items="getProduct_list"
-                      :items-per-page="20"
-                      class="elevation-1"
-                    >
-                      <template v-slot:[`item.actions`]="{ item }">
-                        <v-icon
-                          color="warning"
-                          v-text="'mdi-text-box-edit-outline'"
-                          @click="editProduct(item._id)"
-                        ></v-icon>
-                        <v-icon
-                          color="error"
-                          v-text="'mdi-trash-can-outline'"
-                          @click="deleteDialog(item._id)"
-                        ></v-icon>
-                      </template>
-                    </v-data-table>
+                    <v-card>
+                      <v-card-title
+                        ><v-text-field
+                          v-model="search"
+                          label="ค้นหา"
+                          single-line
+                          hide-details
+                        ></v-text-field
+                      ></v-card-title>
+                      <v-data-table
+                        :search="search"
+                        :headers="headers"
+                        :items="getProduct_list"
+                        :items-per-page="20"
+                        class="elevation-1"
+                      >
+                        <template v-slot:[`item.actions`]="{ item }">
+                          <v-icon
+                            color="warning"
+                            v-text="'mdi-text-box-edit-outline'"
+                            @click="editProduct(item._id)"
+                          ></v-icon>
+                          <v-icon
+                            color="error"
+                            v-text="'mdi-trash-can-outline'"
+                            @click="deleteDialog(item._id)"
+                          ></v-icon>
+                        </template>
+                      </v-data-table>
+                    </v-card>
                   </v-col>
                 </v-row>
               </v-responsive>
@@ -187,6 +204,7 @@ export default {
   data() {
     return {
       search: '',
+      searchOrders: '',
       items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
       product_types_select: ['อาหาร', 'เครื่องดื่ม', 'ของหวาน'],
       page: 1,
@@ -211,16 +229,62 @@ export default {
         { text: 'จำนวนสินค้า', value: 'product_amount' },
         { text: 'Actions', value: 'actions' },
       ],
+      headersOrders: [
+        {
+          text: 'id',
+          align: 'start',
+          sortable: false,
+          value: '_id',
+        },
+        { text: 'ราคารวม', value: 'total' },
+        { text: 'สถานะ', value: 'statusCode' },
+        { text: 'วันที่สั่งซื้อ', value: 'createdAt' },
+        { text: 'Actions', value: 'actions' },
+      ],
     }
   },
   components: { Sidebar, DialogProductEdit },
   async created() {
     await this.getAllProduct()
+    await this.fn_getordersall()
   },
   computed: {
     ...mapGetters('products', ['getProduct_list', 'getProduct_detail']),
+    ...mapGetters('orders', ['getOrderslist']),
     detail() {
       return this.getProduct_detail
+    },
+  },
+  filters: {
+    formatDate(dateToBeFormatted) {
+      if (dateToBeFormatted == '') {
+        return ''
+      }
+      const date = new Date(dateToBeFormatted)
+      var months = [
+        'ม.ค.',
+        'ก.พ.',
+        'มี.ค.',
+        'เม.ย.',
+        'พ.ค.',
+        'มิ.ย.',
+        'ก.ค.',
+        'ส.ค.',
+        'ก.ย.',
+        'ต.ค.',
+        'พ.ย.',
+        'ธ.ค.',
+      ]
+      var d = new Date()
+      var monthName = months[date.getMonth()]
+      // var time = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+      return `${date.getDate()} ${monthName} ${
+        date.getFullYear() + 543
+      } ${date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      })} ${'น.'}` //th js fix
     },
   },
   methods: {
@@ -230,6 +294,7 @@ export default {
       'getProductDetail',
       'deleteProduct',
     ]),
+    ...mapActions('orders', ['fn_getordersall']),
     selectePage(value) {
       this.page = value
     },
@@ -290,5 +355,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

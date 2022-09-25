@@ -3,21 +3,23 @@
     <v-responsive class="navbar-top" :aspect-ratio="16 / 9" fluid>
       <Sidebar />
       <template>
-        <v-container class="brown lighten-4" fluid>
+        <v-container class="teal lighten-4" fluid>
           <v-responsive class="mx-auto pa-2" max-width="1264">
             <v-row>
               <v-col cols="3" v-for="(item, i) in product_dessert" :key="i">
-                <v-card class="mx-auto brown lighten-5" max-width="344">
+                <v-card class="mx-auto teal darken-3" max-width="344">
                   <v-img :src="item.product_img" height="200"></v-img>
 
-                  <v-card-title> {{ item.product_name }} </v-card-title>
+                  <v-card-title class="white--text">
+                    {{ item.product_name }}
+                  </v-card-title>
 
-                  <v-card-subtitle>
+                  <v-card-subtitle class="white--text">
                     ราคา {{ item.product_price }} บาท
                   </v-card-subtitle>
 
                   <v-card-actions>
-                    <v-btn color="success" outlined rounded>
+                    <v-btn color="success" rounded>
                       <v-icon> mdi-cart </v-icon> add
                     </v-btn>
 
@@ -28,7 +30,9 @@
                     <div v-show="show">
                       <v-divider></v-divider>
 
-                      <v-card-text>
+                      <v-card-text
+                        class="d-inline-block text-truncate white--text"
+                      >
                         {{ item.product_detail }}
                       </v-card-text>
                     </div>
@@ -76,5 +80,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
