@@ -3,6 +3,7 @@ import getters from "./getters"
 import mutations from "./mutatios"
 const state = () => ({
   orders_list: [],
+  orders_detail: {}
 })
 
 export default {

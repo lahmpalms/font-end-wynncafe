@@ -38,7 +38,7 @@
                           <v-icon
                             color="warning"
                             v-text="'mdi-text-box-edit-outline'"
-                            @click="editProduct(item._id)"
+                            @click="invoiceDetail(item._id)"
                           ></v-icon>
                           <v-icon
                             color="error"
@@ -193,6 +193,11 @@
       :detail="getProduct_detail"
       @close="dialogEditProduct = false"
     ></DialogProductEdit>
+    <Invoice
+      :dialog="invoiceDialog"
+      :detailInvoice="detailInvoice"
+      @close="close"
+    ></Invoice>
   </div>
 </template>
 
@@ -200,9 +205,11 @@
 import { mapActions, mapGetters } from 'vuex'
 import Sidebar from '~/components/share/sidebar.vue'
 import DialogProductEdit from '../../components/dialog/dialogProductEdit.vue'
+import Invoice from '~/components/dialog/invoice.vue'
 export default {
   data() {
     return {
+      invoiceDialog: false,
       search: '',
       searchOrders: '',
       items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
@@ -243,16 +250,19 @@ export default {
       ],
     }
   },
-  components: { Sidebar, DialogProductEdit },
+  components: { Sidebar, DialogProductEdit, Invoice },
   async created() {
     await this.getAllProduct()
     await this.fn_getordersall()
   },
   computed: {
     ...mapGetters('products', ['getProduct_list', 'getProduct_detail']),
-    ...mapGetters('orders', ['getOrderslist']),
+    ...mapGetters('orders', ['getOrderslist', 'getOrdersdetail']),
     detail() {
       return this.getProduct_detail
+    },
+    detailInvoice() {
+      return this.getOrdersdetail
     },
   },
   filters: {
@@ -294,7 +304,7 @@ export default {
       'getProductDetail',
       'deleteProduct',
     ]),
-    ...mapActions('orders', ['fn_getordersall']),
+    ...mapActions('orders', ['fn_getordersall', 'fn_getordersdetail']),
     selectePage(value) {
       this.page = value
     },
@@ -319,6 +329,12 @@ export default {
         })
       })
       this.dialogAddProduct = false
+    },
+    async invoiceDetail(id) {
+      console.log(id)
+      await this.fn_getordersdetail(id)
+      console.log(this.getOrdersdetail)
+      this.invoiceDialog = true
     },
     async editProduct(id) {
       console.log(id)
@@ -350,6 +366,9 @@ export default {
         }
       })
       console.log('delete id', id)
+    },
+    close() {
+      window.location.reload()
     },
   },
 }
