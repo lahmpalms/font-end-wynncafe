@@ -4,7 +4,7 @@
     <template>
       <v-container class="teal lighten-4" fluid>
         <v-row class="d-flex justify-center text-center" align="center">
-          <v-col class="text-center ">
+          <v-col class="text-center">
             <span style="font-weight: bold; font-size: 50px; color: black">
               {{ item.product_name }}
             </span>
@@ -21,11 +21,7 @@
                 ราคา {{ item.product_price }} บาท
               </v-card-subtitle>
               <v-card-actions>
-                <v-btn
-                  color="success"
-                  rounded
-                  @click="addToCart(item._id)"
-                >
+                <v-btn color="success" rounded @click="addToCart(item._id)">
                   <v-icon> mdi-cart </v-icon>
                   ADD TO CART
                 </v-btn>
@@ -52,13 +48,13 @@
 </template>
 
 <script>
+import { thisExpression } from '@babel/types'
 import { mapActions, mapGetters } from 'vuex'
 import Sidebar from '~/components/share/sidebar.vue'
 export default {
   data() {
     return {
       cart: [],
-      amount: 1,
     }
   },
   created() {
@@ -76,17 +72,29 @@ export default {
   },
   methods: {
     ...mapActions('products', ['getProductDetail']),
-    addToCart(id) {
+    async addToCart(id) {
       console.log(id)
-      const data = {
+
+      let data = {
         _id: id,
-        amount: this.amount,
+        amount: 1,
       }
-      if (data._id == data._id) {
-        this.amount++
+      const productIncart = this.cart.find((item) => {
+        return true
+      })
+      // console.log((productIncart.amount += 1))
+
+      if (!productIncart) {
+        this.cart.push(data)
+      } else if (productIncart._id == data._id) {
+        productIncart.amount += 1
+      } else {
         this.cart.push(data)
       }
       console.log(this.cart)
+      localStorage.setItem('cart', JSON.stringify(this.cart))
+      const locals = localStorage.getItem('cart')
+      console.log(locals)
     },
   },
   components: { Sidebar },
