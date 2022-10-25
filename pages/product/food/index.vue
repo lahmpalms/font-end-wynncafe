@@ -19,10 +19,13 @@
                   </v-card-subtitle>
 
                   <v-card-actions>
-                    <v-btn color="success" rounded>
-                      <v-icon> mdi-cart </v-icon> add
+                    <v-btn
+                      color="success"
+                      rounded
+                      @click="productDetail(item._id)"
+                    >
+                      <v-icon dense> mdi-list-box-outline </v-icon>
                     </v-btn>
-
                     <v-spacer></v-spacer>
                   </v-card-actions>
 
@@ -74,6 +77,10 @@ export default {
   },
   methods: {
     ...mapActions('products', ['getAllProduct']),
+    productDetail(prd_id) {
+      console.log(prd_id)
+      this.$router.push(`/product/${prd_id}`)
+    },
   },
   components: { ProductCard, Sidebar },
 }

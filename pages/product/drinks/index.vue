@@ -8,22 +8,24 @@
             <v-row>
               <v-col cols="3" v-for="(item, i) in product_drink" :key="i">
                 <v-card class="mx-auto teal darken-3" max-width="344">
-                  <v-img
-                    :src="item.product_img"
-                    height="200"
-                  ></v-img>
+                  <v-img :src="item.product_img" height="200"></v-img>
 
-                  <v-card-title class="white--text"> {{ item.product_name }} </v-card-title>
+                  <v-card-title class="white--text">
+                    {{ item.product_name }}
+                  </v-card-title>
 
                   <v-card-subtitle class="white--text">
                     ราคา {{ item.product_price }} บาท
                   </v-card-subtitle>
 
                   <v-card-actions>
-                    <v-btn color="success" rounded>
-                      <v-icon> mdi-cart </v-icon> add
+                    <v-btn
+                      color="success"
+                      rounded
+                      @click="productDetail(item._id)"
+                    >
+                      <v-icon dense> mdi-list-box-outline </v-icon>
                     </v-btn>
-
                     <v-spacer></v-spacer>
                   </v-card-actions>
 
@@ -31,7 +33,9 @@
                     <div v-show="show">
                       <v-divider></v-divider>
 
-                      <v-card-text class="d-inline-block text-truncate white--text">
+                      <v-card-text
+                        class="d-inline-block text-truncate white--text"
+                      >
                         {{ item.product_detail }}
                       </v-card-text>
                     </div>
@@ -74,10 +78,13 @@ export default {
   },
   methods: {
     ...mapActions('products', ['getAllProduct']),
+    productDetail(prd_id) {
+      console.log(prd_id)
+      this.$router.push(`/product/${prd_id}`)
+    },
   },
   components: { ProductCard, Sidebar },
 }
 </script>
 
-<style>
-</style>
+<style></style>

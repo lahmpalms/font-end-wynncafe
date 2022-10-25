@@ -1,6 +1,6 @@
 <template>
   <v-responsive class="navbar-top brown lighten-4" :aspect-ratio="16 / 9" fluid>
-    <Sidebar></Sidebar>
+    <Sidebar :allItem="stored ? stored : []" :show="true"></Sidebar>
     <template>
       <v-container class="teal lighten-4" fluid>
         <v-row class="d-flex justify-center text-center" align="center">
@@ -21,7 +21,11 @@
                 ราคา {{ item.product_price }} บาท
               </v-card-subtitle>
               <v-card-actions>
-                <v-btn color="success" rounded @click="addToCart(item._id)">
+                <v-btn
+                  color="success"
+                  rounded
+                  @click="addToCart(item._id, item.product_name)"
+                >
                   <v-icon> mdi-cart </v-icon>
                   ADD TO CART
                 </v-btn>
@@ -48,21 +52,28 @@
 </template>
 
 <script>
-import { thisExpression } from '@babel/types'
+import { add, total, list } from 'cart-localstorage'
 import { mapActions, mapGetters } from 'vuex'
 import Sidebar from '~/components/share/sidebar.vue'
 export default {
   data() {
     return {
       cart: [],
+      stored: null,
     }
   },
-  created() {
+  async created() {
     const { slug } = this.$route.params
     console.log('slug', slug)
     this.getProductDetail(slug)
-    const arr = localStorage.getItem('cart')
-    console.log(arr)
+    this.stored = JSON.parse(localStorage.getItem('cart'))
+    if (this.stored) {
+      for (const item of this.stored) {
+        this.cart.push(item)
+      }
+    }
+
+    console.log(this.cart)
   },
   computed: {
     ...mapGetters('products', ['getProduct_detail']),
@@ -72,17 +83,17 @@ export default {
   },
   methods: {
     ...mapActions('products', ['getProductDetail']),
-    async addToCart(id) {
+    async addToCart(id, name) {
       console.log(id)
-
+      console.log(name)
       let data = {
         _id: id,
         amount: 1,
+        product_name: name,
       }
       const productIncart = this.cart.find((item) => {
-        return true
+        return item._id === data._id
       })
-      // console.log((productIncart.amount += 1))
 
       if (!productIncart) {
         this.cart.push(data)
@@ -90,11 +101,16 @@ export default {
         productIncart.amount += 1
       } else {
         this.cart.push(data)
+        const x = this.cart.find((item) => {
+          return true
+        })
+        if (x) {
+          x._id == data._id ? (x.amount += 1) : null
+        }
       }
-      console.log(this.cart)
+      // console.log(this.cart)
       localStorage.setItem('cart', JSON.stringify(this.cart))
-      const locals = localStorage.getItem('cart')
-      console.log(locals)
+      console.log(this.stored)
     },
   },
   components: { Sidebar },
