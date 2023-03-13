@@ -76,12 +76,12 @@ export default {
       dark: false,
       themes: {
         light: {
-          primary: '#e20074',
-          secondary: '#6c757d',
-          accent: '#3ea2fb',
+          primary: '#8D7B68',
+          secondary: '#A4907C',
+          accent: '#C8B6A6',
           error: '#dc3545',
           petrol: '#17a499',
-          background: '#fff',
+          background: '#F1DEC9',
         },
       },
     },

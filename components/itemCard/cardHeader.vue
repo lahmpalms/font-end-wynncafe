@@ -1,7 +1,7 @@
 <template>
   <v-row class="py-2">
     <v-col align-self="center">
-      <span class="text-medium" v-text="header"></span>
+      <span class="font-weigth-bold" v-text="header"></span>
     </v-col>
     <v-col class="py-0" align-self="center" cols="auto" v-if="show">
       <v-btn
@@ -9,9 +9,10 @@
         color="brown lighten-3"
         rounded
         text
-        v-text="share_view_all"
         @click.stop="$router.push(`${route}`)"
-      ></v-btn>
+      >
+        {{ share_view_all }}</v-btn
+      >
     </v-col>
   </v-row>
 </template>
@@ -37,7 +38,7 @@ export default {
   },
   data() {
     return {
-      share_view_all: "ทั้งหมด",
+      share_view_all: 'ทั้งหมด',
     }
   },
 }

@@ -1,11 +1,11 @@
 <template>
-  <v-card class="ma-4 teal darken-3" height="300" width="200">
+  <v-card class="mx-2 rounded-xl" color="#A4907C" height="auto" width="200">
     <!-- {{ item }} -->
     <v-img :src="item.product_img" width="200" height="200"></v-img>
     <v-card-text>
       <v-row>
         <v-col class="d-flex justify-center mt-2 ma-0">
-          <span style="font-weight: bold; color: white;">
+          <span class="text-truncate" style="font-weight: bold; color: white">
             {{ item.product_name }}
           </span>
         </v-col>
@@ -17,16 +17,8 @@
         >
           {{ item.product_price }} บาท
         </span>
-        <v-row>
-          <v-col>
-            <v-icon dense @click="productDetail(item._id)"> mdi-list-box-outline </v-icon>
-          </v-col>
-        </v-row>
       </div>
     </v-card-text>
-    <v-row class="fill-height" align="center" justify="center">
-      <v-scale-transition> </v-scale-transition>
-    </v-row>
   </v-card>
 </template>
 
@@ -44,12 +36,11 @@ export default {
   },
   methods: {
     productDetail(prd_id) {
-      console.log(prd_id);
+      console.log(prd_id)
       this.$router.push(`/product/${prd_id}`)
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style>
-</style>
+<style></style>

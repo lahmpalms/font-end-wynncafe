@@ -14,7 +14,7 @@
         <v-icon> mdi-account</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-navigation-drawer v-model="drawer" absolute bottom temporary>
+    <v-navigation-drawer v-model="drawer" absolute>
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="brown lighten-3">
           <v-list-item @click="next('/')">

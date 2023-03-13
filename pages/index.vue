@@ -1,5 +1,71 @@
 <template>
-  <v-responsive class="navbar-top" :aspect-ratio="16 / 9" fluid>
+  <v-responsive>
+    <v-carousel cycle :height="height" hide-delimiter-background show-arrows>
+      <v-carousel-item v-for="(slide, i) in coverImages" :key="i">
+        <v-img :height="height" :src="slide.src"></v-img>
+      </v-carousel-item>
+    </v-carousel>
+    <v-card class="mt-n4 rounded-t-xl" flat color="#F1DEC9">
+      <v-card-text>
+        <v-card class="rounded-xl" color="#C8B6A6">
+          <v-card-text>
+            <v-row justify="center">
+              <v-col
+                align="center"
+                v-for="(item, index) in categoryService"
+                :key="index"
+              >
+                <v-avatar color="primary" size="80">
+                  <v-icon size="40"> {{ item.icon }}</v-icon></v-avatar
+                >
+                <p>
+                  {{ item.title }}
+                </p>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-card-text>
+      <v-card-text>
+        <CardHeader
+          :header="alldrink"
+          :show="true"
+          :route="`/product/drinks`"
+        ></CardHeader>
+        <vue-horizontal :button="$vuetify.breakpoint.xs ? true : false">
+          <section class="pa-1" v-for="(item, i) in product_drink" :key="i">
+            <ProductCard :item="item"></ProductCard>
+          </section>
+        </vue-horizontal>
+      </v-card-text>
+      <v-card-text>
+        <CardHeader
+          :header="allproduct"
+          :show="true"
+          :route="`/product/food`"
+        ></CardHeader>
+        <vue-horizontal :button="$vuetify.breakpoint.xs ? true : false">
+          <section class="pa-1" v-for="(item, i) in product_food" :key="i">
+            <ProductCard :item="item"></ProductCard>
+          </section>
+        </vue-horizontal>
+      </v-card-text>
+      <v-card-text>
+        <CardHeader
+          :header="alldessert"
+          :show="true"
+          :route="`/product/desserts`"
+        ></CardHeader>
+
+        <vue-horizontal :button="$vuetify.breakpoint.xs ? true : false">
+          <section class="pa-1" v-for="(item, i) in product_dessert" :key="i">
+            <ProductCard :item="item"></ProductCard>
+          </section>
+        </vue-horizontal>
+      </v-card-text>
+    </v-card>
+  </v-responsive>
+  <!-- <v-responsive>
     <Sidebar></Sidebar>
     <template>
       <v-container class="teal lighten-4" fluid>
@@ -11,12 +77,12 @@
               :show="true"
               :route="`/product/drinks`"
             ></CardHeader>
-            <vue-horizontal :button="xs ? false : true">
-              <section class="pa-1" v-for="(item, i) in product_drink" :key="i">
-                <ProductCard :item="item"></ProductCard>
-              </section>
-            </vue-horizontal>
           </section>
+          <vue-horizontal :button="xs ? false : true">
+            <section class="pa-1" v-for="(item, i) in product_drink" :key="i">
+              <ProductCard :item="item"></ProductCard>
+            </section>
+          </vue-horizontal>
         </v-responsive>
       </v-container>
 
@@ -28,12 +94,12 @@
               :show="true"
               :route="`/product/food`"
             ></CardHeader>
-            <vue-horizontal :button="xs ? false : true">
-              <section class="pa-1" v-for="(item, i) in product_food" :key="i">
-                <ProductCard :item="item"></ProductCard>
-              </section>
-            </vue-horizontal>
           </section>
+          <vue-horizontal :button="xs ? false : true">
+            <section class="pa-1" v-for="(item, i) in product_food" :key="i">
+              <ProductCard :item="item"></ProductCard>
+            </section>
+          </vue-horizontal>
         </v-responsive>
       </v-container>
 
@@ -45,24 +111,16 @@
               :show="true"
               :route="`/product/desserts`"
             ></CardHeader>
-            <vue-horizontal :button="xs ? false : true">
-              <section
-                class="pa-1"
-                v-for="(item, i) in product_dessert"
-                :key="i"
-              >
-                <ProductCard :item="item"></ProductCard>
-              </section>
-            </vue-horizontal>
           </section>
+          <vue-horizontal :button="xs ? false : true">
+            <section class="pa-1" v-for="(item, i) in product_dessert" :key="i">
+              <ProductCard :item="item"></ProductCard>
+            </section>
+          </vue-horizontal>
         </v-responsive>
       </v-container>
-      <!-- {{cartNumber}}
-      <v-btn @click="test()">
-        test count
-      </v-btn> -->
     </template>
-  </v-responsive>
+  </v-responsive> -->
 </template>
 
 <script>
@@ -84,12 +142,57 @@ export default {
       drawer: false,
       group: null,
       cartNumber: 0,
+      coverImages: [
+        {
+          src: 'https://cdn.pixabay.com/photo/2017/05/12/08/29/coffee-2306471_1280.jpg',
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2020/09/21/05/57/coffee-5589036_1280.jpg',
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2016/04/20/14/29/coffee-1341259_1280.jpg',
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2017/10/17/21/15/pair-2862155_1280.jpg',
+        },
+      ],
+      categoryService: [
+        {
+          icon: 'mdi-coffee-outline',
+          route: '',
+          title: 'เครื่องดื่ม',
+          active: true,
+        },
+        {
+          icon: 'mdi-food-outline',
+          route: '',
+          title: 'อาหาร',
+          active: true,
+        },
+        {
+          icon: 'mdi-cake-variant-outline',
+          route: '',
+          title: 'ของหวาน',
+          active: true,
+        },
+      ],
     }
   },
   computed: {
     ...mapGetters('products', ['getProduct_list']),
-    xs() {
-      return this.$vuetify.breakpoint.xs
+    height() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 220
+        case 'sm':
+          return 400
+        case 'md':
+          return 500
+        case 'lg':
+          return 600
+        case 'xl':
+          return 800
+      }
     },
     product_food() {
       const food = this.getProduct_list.filter(

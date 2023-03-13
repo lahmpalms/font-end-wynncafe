@@ -1,5 +1,5 @@
 <template>
-  <v-responsive class="navbar-top brown lighten-4" :aspect-ratio="16 / 9" fluid>
+  <v-responsive fluid>
     <Sidebar :allItem="stored ? stored : []" :show="true"></Sidebar>
     <template>
       <v-container class="teal lighten-4" fluid>
