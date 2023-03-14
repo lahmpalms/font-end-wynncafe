@@ -65,8 +65,8 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          title: 'สั่งอาหาร',
+          to: '/order',
         },
       ],
       miniVariant: false,

@@ -127,8 +127,9 @@ export default {
               icon: 'error',
               showConfirmButton: false,
               showCancelButton: false,
+              timer: 5000
             }).then(() => {
-              window.location = '/'
+              window.location.reload()
             })
           }
         }

@@ -32,4 +32,13 @@ export default {
       return error.response.data
     }
   },
+
+  async payment( { commit }, payload ) {
+    try {
+      const response = await this.$axios.post(`/payment`, payload)
+      return response.data
+    } catch (error) {
+      return error.response
+    }
+  }
 }

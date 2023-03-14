@@ -52,9 +52,21 @@
       </v-card-text>
       <v-card-text>
         <v-row>
-          <v-col> <v-btn color="green" @click="payment('success')"> จ่ายเงินสำเร็จ </v-btn></v-col>
-          <v-col> <v-btn color="red"  @click="payment('fail')"> จ่ายเงินไม่สำเร็จ </v-btn></v-col>
-          <v-col> <v-btn @click="payment('callback')"> ยกเลิกการจ่ายเงิน </v-btn></v-col>
+          <v-col>
+            <v-btn color="green" @click="paymentFunctions('success')">
+              จ่ายเงินสำเร็จ
+            </v-btn></v-col
+          >
+          <v-col>
+            <v-btn color="red" @click="paymentFunctions('fail')">
+              จ่ายเงินไม่สำเร็จ
+            </v-btn></v-col
+          >
+          <v-col>
+            <v-btn @click="paymentFunctions('cancel')">
+              ยกเลิกการจ่ายเงิน
+            </v-btn></v-col
+          >
         </v-row>
       </v-card-text>
     </v-card>
@@ -62,7 +74,17 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
+  asyncData({ query }) {
+    const { orderId } = query
+    return {
+      orderId: orderId,
+    }
+  },
+  created() {
+    console.log(this.orderId)
+  },
   computed: {
     orderListItem() {
       let a = []
@@ -83,10 +105,96 @@ export default {
     },
   },
   methods: {
-    payment(status) {
-      console.log('status', status);
-    }
-  }
+    ...mapActions('orders', ['payment']),
+    async paymentFunctions(status) {
+      console.log('status', status)
+      console.log(this.orderId)
+      const payload = {
+        ordersId: this.orderId,
+        status: status,
+      }
+      console.log(payload)
+      if (status == 'success') {
+        const resp = await this.payment(payload)
+        if (resp.success == true) {
+          this.$swal({
+            title: 'สำเร็จ',
+            text: 'ดำเนินการสั่งอาหารสำเร็จ',
+            icon: 'success',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 5000,
+          }).then(() => {
+            localStorage.clear('orderList')
+            window.location = '/'
+          })
+        } else {
+          this.$swal({
+            title: 'ไม่สำเร็จ',
+            text: 'เกิดข้อผิดพลาดกรุณาติดต่อเจ้าหน้าที่',
+            icon: 'error',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 5000,
+          }).then(() => {
+            localStorage.clear('orderList')
+            window.location = '/'
+          })
+        }
+      } else if (status == 'fail') {
+        const resp = await this.payment(payload)
+        if (resp.success == true) {
+          this.$swal({
+            title: 'ไม่สำเร็จ',
+            text: 'ทำการจ่ายเงินไม่สำเร็จ',
+            icon: 'error',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 5000,
+          }).then(() => {
+            localStorage.clear('orderList')
+            window.location = '/'
+          })
+        } else {
+          this.$swal({
+            title: 'ไม่สำเร็จ',
+            text: 'เกิดข้อผิดพลาดกรุณาติดต่อเจ้าหน้าที่',
+            icon: 'error',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 5000,
+          }).then(() => {
+            window.location = '/'
+          })
+        }
+      } else {
+        const resp = await this.payment(payload)
+        if (resp.success == true) {
+          this.$swal({
+            title: 'ไม่สำเร็จ',
+            text: 'ท่านทำการยกเลิกการจ่ายเงิน',
+            icon: 'error',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 5000,
+          }).then(() => {
+            window.location = '/'
+          })
+        } else {
+          this.$swal({
+            title: 'ไม่สำเร็จ',
+            text: 'เกิดข้อผิดพลาดกรุณาติดต่อเจ้าหน้าที่',
+            icon: 'error',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 5000,
+          }).then(() => {
+            window.location = '/'
+          })
+        }
+      }
+    },
+  },
 }
 </script>
 
