@@ -1,59 +1,52 @@
 <template>
-  <v-card class="mx-auto overflow-hidden" height="400">
-    <v-app>
-      <v-app-bar :clipped-left="clipped" app flat :color="'#C8B6A6'">
-        <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-        <v-spacer></v-spacer>
-        <v-avatar color="primary" size="40">
-          <v-icon> mdi-coffee </v-icon>
-        </v-avatar>
-        <v-toolbar-title class="px-2">Wynn Cafe</v-toolbar-title>
-      </v-app-bar>
+  <v-app>
+    <v-app-bar :clipped-left="clipped" app flat :color="'#C8B6A6'">
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <v-spacer></v-spacer>
+      <v-avatar color="primary" size="40">
+        <v-icon> mdi-coffee </v-icon>
+      </v-avatar>
+      <v-toolbar-title class="px-2">Wynn Cafe</v-toolbar-title>
+    </v-app-bar>
 
-      <v-navigation-drawer
-        v-model="drawer"
-        fixed
-        app
-        :clipped="clipped"
-        absolute
-        temporary
-      >
-        <v-list dense>
-          <v-list-item>
-            <v-list-item-avatar>
-              <v-img
-                src="https://randomuser.me/api/portraits/men/78.jpg"
-              ></v-img>
-            </v-list-item-avatar>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      temporary
+    >
+      <v-list dense>
+        <v-list-item>
+          <v-list-item-avatar>
+            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+          </v-list-item-avatar>
 
-            <v-list-item-content>
-              <v-list-item-title>John Leider</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-          
-          <v-list-item
-            link
-            v-for="(item, index) in menuItems"
-            :key="index"
-            @click="$router.push(`${item.to}`)"
-          >
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>John Leider</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
+        <v-list-item
+          link
+          v-for="(item, index) in menuItems"
+          :key="index"
+          @click="$router.push(`${item.to}`)"
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
 
-      <v-main>
-        <Nuxt />
-      </v-main>
-    </v-app>
-  </v-card>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main>
+      <Nuxt />
+    </v-main>
+  </v-app>
 </template>
 
 <script>

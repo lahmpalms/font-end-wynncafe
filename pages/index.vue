@@ -9,20 +9,6 @@
       <v-card-text>
         <v-card class="rounded-xl" color="#C8B6A6">
           <v-card-text>
-            <v-row justify="center">
-              <v-col
-                align="center"
-                v-for="(item, index) in categoryService"
-                :key="index"
-              >
-                <v-avatar color="primary" size="80">
-                  <v-icon size="40"> {{ item.icon }}</v-icon></v-avatar
-                >
-                <p>
-                  {{ item.title }}
-                </p>
-              </v-col>
-            </v-row>
             <v-row>
               <v-col cols="12">
                 <v-btn large block class="rounded-lg" color="#F1DEC9" @click="$router.push('/order')">

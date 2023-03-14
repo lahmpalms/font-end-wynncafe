@@ -32,6 +32,17 @@
         </span>
       </div>
     </v-card-text>
+    <v-card-actions v-if="page == 'allproduct'">
+      <v-btn
+        block
+        elevation="0"
+        rounded
+        color="primary"
+        @click="addOrders(item._id)"
+      >
+        <v-icon small class="px-2"> mdi-cart </v-icon> สั่งอาหาร
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -51,9 +62,36 @@ export default {
     }
   },
   methods: {
-    productDetail(prd_id) {
-      console.log(prd_id)
-      this.$router.push(`/product/${prd_id}`)
+    addOrders(id) {
+      const payload = {
+        product_id: id,
+        product_amount: 1,
+      }
+      if (localStorage.getItem('ordersList')) {
+        let orderList = JSON.parse(localStorage.getItem('ordersList'))
+        const productIncart = orderList.find((item) => {
+          return item.product_id === payload.product_id
+        })
+        if (!productIncart) {
+          orderList.push(payload)
+        } else if (productIncart.product_id == payload.product_id) {
+          productIncart.product_amount += 1
+        } else {
+          orderList.push(data)
+          const x = this.orderList.find((item) => {
+            return true
+          })
+          if (x) {
+            x.product_id == payload.product_id ? (x.product_amount += 1) : null
+          }
+        }
+        localStorage.setItem('ordersList', JSON.stringify(orderList))
+        console.log(JSON.parse(localStorage.getItem('ordersList')))
+      } else {
+        let cartArray = []
+        cartArray.push(payload)
+        localStorage.setItem('ordersList', JSON.stringify(cartArray))
+      }
     },
   },
 }

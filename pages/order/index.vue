@@ -7,6 +7,18 @@
     </v-carousel>
     <v-card class="mt-n4 rounded-t-xl" flat color="#F1DEC9">
       <v-card-text>
+        <v-row class="text-right">
+          <v-col>
+            <v-btn elevation="0" text>
+              <span class="text-decoration-underline">รายการคำสั่งซื้อ</span>
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn rounded elevation="0" color="success"> ชำระเงิน </v-btn>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-text>
         <v-row>
           <v-col v-for="(item, index) in getProduct_list" :key="index">
             <ProductCard :page="'allproduct'" :item="item"></ProductCard>
