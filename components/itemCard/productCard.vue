@@ -38,7 +38,7 @@
         elevation="0"
         rounded
         color="primary"
-        @click="addOrders(item._id)"
+        @click="addOrders(item._id, item.product_price, item.product_name)"
       >
         <v-icon small class="px-2"> mdi-cart </v-icon> สั่งอาหาร
       </v-btn>
@@ -62,10 +62,12 @@ export default {
     }
   },
   methods: {
-    addOrders(id) {
+    addOrders(id, price, name) {
       const payload = {
         product_id: id,
         product_amount: 1,
+        product_price: price,
+        product_name: name,
       }
       if (localStorage.getItem('ordersList')) {
         let orderList = JSON.parse(localStorage.getItem('ordersList'))
@@ -92,6 +94,7 @@ export default {
         cartArray.push(payload)
         localStorage.setItem('ordersList', JSON.stringify(cartArray))
       }
+      window.location.reload()
     },
   },
 }
