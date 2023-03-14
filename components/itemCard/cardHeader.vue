@@ -3,17 +3,6 @@
     <v-col align-self="center">
       <span class="font-weigth-bold" v-text="header"></span>
     </v-col>
-    <v-col class="py-0" align-self="center" cols="auto" v-if="show">
-      <v-btn
-        class="text-medium"
-        color="brown lighten-3"
-        rounded
-        text
-        @click.stop="$router.push(`${route}`)"
-      >
-        {{ share_view_all }}</v-btn
-      >
-    </v-col>
   </v-row>
 </template>
 <script>

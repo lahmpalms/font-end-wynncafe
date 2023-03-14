@@ -23,6 +23,14 @@
                 </p>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12">
+                <v-btn large block class="rounded-lg" color="#F1DEC9" @click="$router.push('/order')">
+                  <v-icon class="px-2"> mdi-order-bool-descending</v-icon>
+                  เริ่มสั่งอาหาร</v-btn
+                >
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-card-text>
@@ -32,7 +40,7 @@
           :show="true"
           :route="`/product/drinks`"
         ></CardHeader>
-        <vue-horizontal :button="$vuetify.breakpoint.xs ? true : false">
+        <vue-horizontal :button="false">
           <section class="pa-1" v-for="(item, i) in product_drink" :key="i">
             <ProductCard :item="item"></ProductCard>
           </section>
@@ -44,7 +52,7 @@
           :show="true"
           :route="`/product/food`"
         ></CardHeader>
-        <vue-horizontal :button="$vuetify.breakpoint.xs ? true : false">
+        <vue-horizontal :button="false">
           <section class="pa-1" v-for="(item, i) in product_food" :key="i">
             <ProductCard :item="item"></ProductCard>
           </section>
@@ -57,7 +65,7 @@
           :route="`/product/desserts`"
         ></CardHeader>
 
-        <vue-horizontal :button="$vuetify.breakpoint.xs ? true : false">
+        <vue-horizontal :button="false">
           <section class="pa-1" v-for="(item, i) in product_dessert" :key="i">
             <ProductCard :item="item"></ProductCard>
           </section>
@@ -65,62 +73,6 @@
       </v-card-text>
     </v-card>
   </v-responsive>
-  <!-- <v-responsive>
-    <Sidebar></Sidebar>
-    <template>
-      <v-container class="teal lighten-4" fluid>
-        <ServiceCard class="mt-2"></ServiceCard>
-        <v-responsive class="mx-auto pa-2" max-width="1264">
-          <section name="alldrink" v-if="getProduct_list.length">
-            <CardHeader
-              :header="alldrink"
-              :show="true"
-              :route="`/product/drinks`"
-            ></CardHeader>
-          </section>
-          <vue-horizontal :button="xs ? false : true">
-            <section class="pa-1" v-for="(item, i) in product_drink" :key="i">
-              <ProductCard :item="item"></ProductCard>
-            </section>
-          </vue-horizontal>
-        </v-responsive>
-      </v-container>
-
-      <v-container class="teal lighten-4" fluid>
-        <v-responsive class="mx-auto pa-2" max-width="1264">
-          <section name="allproduct" v-if="getProduct_list.length">
-            <CardHeader
-              :header="allproduct"
-              :show="true"
-              :route="`/product/food`"
-            ></CardHeader>
-          </section>
-          <vue-horizontal :button="xs ? false : true">
-            <section class="pa-1" v-for="(item, i) in product_food" :key="i">
-              <ProductCard :item="item"></ProductCard>
-            </section>
-          </vue-horizontal>
-        </v-responsive>
-      </v-container>
-
-      <v-container class="teal lighten-4" fluid>
-        <v-responsive class="mx-auto pa-2" max-width="1264">
-          <section name="alldessert" v-if="getProduct_list.length">
-            <CardHeader
-              :header="alldessert"
-              :show="true"
-              :route="`/product/desserts`"
-            ></CardHeader>
-          </section>
-          <vue-horizontal :button="xs ? false : true">
-            <section class="pa-1" v-for="(item, i) in product_dessert" :key="i">
-              <ProductCard :item="item"></ProductCard>
-            </section>
-          </vue-horizontal>
-        </v-responsive>
-      </v-container>
-    </template>
-  </v-responsive> -->
 </template>
 
 <script>

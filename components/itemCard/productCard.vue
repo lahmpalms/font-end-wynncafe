@@ -1,7 +1,20 @@
 <template>
-  <v-card class="mx-2 rounded-xl" color="#A4907C" height="auto" width="200">
+  <v-card
+    class="mx-2 rounded-xl"
+    color="#A4907C"
+    height="auto"
+    :width="
+      page == 'allproduct' ? ($vuetify.breakpoint.xs ? 'auto' : '250') : '200'
+    "
+  >
     <!-- {{ item }} -->
-    <v-img :src="item.product_img" width="200" height="200"></v-img>
+    <v-img
+      :src="item.product_img"
+      :width="
+        page == 'allproduct' ? ($vuetify.breakpoint.xs ? 'auto' : '250') : '200'
+      "
+      height="200"
+    ></v-img>
     <v-card-text>
       <v-row>
         <v-col class="d-flex justify-center mt-2 ma-0">
@@ -27,6 +40,9 @@ export default {
   props: {
     item: {
       type: Object,
+    },
+    page: {
+      type: String,
     },
   },
   data() {

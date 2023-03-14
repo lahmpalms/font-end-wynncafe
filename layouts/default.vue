@@ -9,19 +9,35 @@
         </v-avatar>
         <v-toolbar-title class="px-2">Wynn Cafe</v-toolbar-title>
       </v-app-bar>
-      <v-navigation-drawer v-model="drawer" absolute temporary>
-        <v-list-item>
-          <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
-          </v-list-item-avatar>
 
-          <v-list-item-content>
-            <v-list-item-title>John Leider</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider></v-divider>
+      <v-navigation-drawer
+        v-model="drawer"
+        fixed
+        app
+        :clipped="clipped"
+        absolute
+        temporary
+      >
         <v-list dense>
-          <v-list-item link v-for="(item, index) in menuItems" :key="index">
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-img
+                src="https://randomuser.me/api/portraits/men/78.jpg"
+              ></v-img>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>John Leider</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          
+          <v-list-item
+            link
+            v-for="(item, index) in menuItems"
+            :key="index"
+            @click="$router.push(`${item.to}`)"
+          >
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -32,6 +48,7 @@
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
+
       <v-main>
         <Nuxt />
       </v-main>
@@ -50,7 +67,7 @@ export default {
       menuItems: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'หน้าแรก',
           to: '/',
         },
         {
