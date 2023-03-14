@@ -11,12 +11,7 @@
               <td colspan="2">
                 <table>
                   <tr>
-                    <td class="title">
-                      <img
-                        src="https://scontent.fbkk5-6.fna.fbcdn.net/v/t39.30808-6/302693439_538719331586940_5531674998550622539_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=UI0MqcyADPgAX-DFyUy&_nc_ht=scontent.fbkk5-6.fna&oh=00_AT-dIAfTm8bc1iaxyKytra4quiUZZvYI_ZfNSiriYej17g&oe=6334B038"
-                        style="width: 50%; max-width: 200px"
-                      />
-                    </td>
+                    <td class="title"></td>
 
                     <td>
                       เลขที่สั่งซื้อ #: {{ detailInvoice._id }}<br />
@@ -109,13 +104,17 @@
         <v-btn color="blue darken-1" text @click="closeAndclear(true)">
           Close
         </v-btn>
-        <v-btn color="blue darken-1" text> Save </v-btn>
+        <v-btn color="blue darken-1" text @click="changeStatusOrder()">
+          เตรียมสินค้าสำเร็จ
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     dialog: {
@@ -162,9 +161,39 @@ export default {
     },
   },
   methods: {
+    ...mapActions('orders', ['updateOrder']),
     closeAndclear(value) {
       if (value === true) {
-        this.$emit('close', false)
+        this.$emit('closeDialogInvoice', false)
+      }
+    },
+    async changeStatusOrder() {
+      const payload = {
+        statusCode: 'success',
+        id: this.detailInvoice._id,
+      }
+      const resp = await this.updateOrder(payload)
+      if (resp.success == true) {
+        this.$swal({
+          title: 'สำเร็จ',
+          text: 'ดำเนินการอัพเดทสำเร็จ',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000,
+        }).then(function () {
+          window.location.reload()
+        })
+      } else {
+        this.$swal({
+          title: 'ไม่สำเร็จ',
+          text: 'กรุณาติดต่อผู้ดูแลระบบ',
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 5000,
+        }).then(() => {
+          window.location.reload()
+        })
       }
     },
   },

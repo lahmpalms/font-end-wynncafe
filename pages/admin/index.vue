@@ -1,16 +1,15 @@
 <template>
   <div>
     <v-responsive class="navbar-top" :aspect-ratio="16 / 9" fluid>
-      <Sidebar />
       <template>
-        <v-container class="teal lighten-4" fluid>
+        <v-container fluid>
           <div>
-            <v-container class="teal lighten-2" fluid>
+            <v-container fluid>
               <v-responsive class="mx-auto pa-2" max-width="1264">
                 <!-- จัดการคำสั่งซื้อ -->
                 <v-row>
                   <v-col>
-                    <h1 class="white--text">จัดการคำสั่งซื้อ</h1>
+                    <h1 class="black--text">จัดการคำสั่งซื้อ</h1>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -31,20 +30,22 @@
                         :items-per-page="20"
                         class="elevation-1"
                       >
+                        <template v-slot:[`item.statusPayment`]="{ item }">
+                          <v-chip :color="item.statusPayment == 'pending' ? 'warning' : 'green'"> {{  item.statusPayment }}</v-chip>
+                        </template>
+                        <template v-slot:[`item.statusCode`]="{ item }">
+                          <v-chip :color="item.statusCode == 'pending' ? 'warning' : 'green'"> {{  item.statusCode }}</v-chip>
+                        </template>
                         <template v-slot:[`item.createdAt`]="{ item }">
                           {{ item.createdAt | formatDate }}
                         </template>
                         <template v-slot:[`item.actions`]="{ item }">
                           <v-icon
                             color="warning"
-                            v-text="'mdi-text-box-edit-outline'"
                             @click="invoiceDetail(item._id)"
-                          ></v-icon>
-                          <v-icon
-                            color="error"
-                            v-text="'mdi-trash-can-outline'"
-                            @click="deleteDialog(item._id)"
-                          ></v-icon>
+                          >
+                            mdi-text-box-edit-outline
+                          </v-icon>
                         </template>
                       </v-data-table>
                     </v-card>
@@ -54,7 +55,7 @@
                 <!-- จัดการสินค้า -->
                 <v-row>
                   <v-col>
-                    <h1 class="white--text">จัดการสินค้า</h1>
+                    <h1 class="black--text">จัดการสินค้า</h1>
                   </v-col>
                   <v-col cols="auto">
                     <v-btn
@@ -196,7 +197,7 @@
     <Invoice
       :dialog="invoiceDialog"
       :detailInvoice="detailInvoice"
-      @close="close"
+      @closeDialogInvoice="invoiceDialog = false"
     ></Invoice>
   </div>
 </template>
@@ -245,6 +246,7 @@ export default {
         },
         { text: 'ราคารวม', value: 'total' },
         { text: 'สถานะ', value: 'statusCode' },
+        { text: 'สถานะการจ่ายเงิน', value: 'statusPayment' },
         { text: 'วันที่สั่งซื้อ', value: 'createdAt' },
         { text: 'Actions', value: 'actions' },
       ],

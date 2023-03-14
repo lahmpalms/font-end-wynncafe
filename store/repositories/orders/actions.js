@@ -33,12 +33,25 @@ export default {
     }
   },
 
-  async payment( { commit }, payload ) {
+  async updateOrder({ commit }, payload) {
+    try {
+      const { statusCode, id } = payload
+      console.log(id);
+      const response = await this.$axios.put(`/orders/${id}`, {
+        statusCode: statusCode,
+      })
+      return response.data
+    } catch (error) {
+      return error.response.data
+    }
+  },
+
+  async payment({ commit }, payload) {
     try {
       const response = await this.$axios.post(`/payment`, payload)
       return response.data
     } catch (error) {
       return error.response
     }
-  }
+  },
 }
