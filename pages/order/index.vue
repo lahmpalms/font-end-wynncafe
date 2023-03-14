@@ -18,7 +18,15 @@
             </v-btn>
           </v-col>
           <v-col>
-            <v-btn rounded elevation="0" color="success"> ชำระเงิน </v-btn>
+            <v-btn
+              rounded
+              elevation="0"
+              color="success"
+              :disabled="orderListItem && orderListItem.length <= 0"
+              @click="goToPayment()"
+            >
+              ชำระเงิน
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -80,14 +88,51 @@ export default {
           return 800
       }
     },
+    orderListItem() {
+      let a = []
+      if (localStorage.getItem('ordersList')) {
+        a = [...JSON.parse(localStorage.getItem('ordersList'))]
+      } else {
+        a = []
+      }
+      return a
+    },
   },
   async created() {
     await this.getAllProduct()
   },
   methods: {
     ...mapActions('products', ['getAllProduct']),
+    ...mapActions('orders', ['fn_createOrders']),
     openDialogOrders() {
       this.dialogOrder = true
+    },
+    goToPayment() {
+      this.$swal({
+        title: 'ดำเนินการ',
+        text: 'ท่านต้องการชำระเงินใช่หรือไม่',
+        icon: 'question',
+        confirmButtonColor: '#4BB543',
+        showConfirmButton: true,
+        showCancelButton: true,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const resp = await this.fn_createOrders(this.orderListItem)
+          if (resp.success == true) {
+            this.$router.push(`/payment?orderId=${resp.data._id}`)
+          } else {
+            this.$swal({
+              title: 'ไม่สำเร็จ',
+              text: 'ท่านสั่งซื้อสินค้าสำเร็จ กรุณาตรวจเช็คสินค้ากับพนักงาน',
+              icon: 'error',
+              showConfirmButton: false,
+              showCancelButton: false,
+            }).then(() => {
+              window.location = '/'
+            })
+          }
+        }
+      })
     },
   },
 }
