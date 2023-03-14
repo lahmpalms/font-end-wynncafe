@@ -10,7 +10,7 @@
         <v-row class="text-right">
           <v-col>
             <v-btn elevation="0" text>
-              <span class="text-decoration-underline">รายการคำสั่งซื้อ</span>
+              <span class="text-decoration-underline" @click="openDialogOrders()">รายการคำสั่งซื้อ</span>
             </v-btn>
           </v-col>
           <v-col>
@@ -26,6 +26,7 @@
         </v-row>
       </v-card-text>
     </v-card>
+    <DialogOrderlist :dialog="dialogOrder"></DialogOrderlist>
   </v-responsive>
 </template>
 
@@ -38,6 +39,7 @@ export default {
   },
   data() {
     return {
+      dialogOrder: false,
       search: '',
       coverImages: [
         {
@@ -77,6 +79,9 @@ export default {
   },
   methods: {
     ...mapActions('products', ['getAllProduct']),
+    openDialogOrders() {
+      
+    }
   },
 }
 </script>
