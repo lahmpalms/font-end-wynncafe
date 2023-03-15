@@ -1,6 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
-const { SERVER_PORT, API_ENDPOINT } = process.env
+const { SERVER_PORT, API_ENDPOINT, SERVER_HOST } = process.env
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -50,7 +50,7 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    'vue-sweetalert2/nuxt'
+    'vue-sweetalert2/nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -91,5 +91,6 @@ export default {
   build: {},
   server: {
     port: `${SERVER_PORT}`,
+    host: `${SERVER_HOST}`,
   },
 }
