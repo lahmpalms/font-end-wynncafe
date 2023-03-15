@@ -51,6 +51,7 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'vue-sweetalert2/nuxt',
+    '@nuxtjs/dotenv',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -91,6 +92,6 @@ export default {
   build: {},
   server: {
     port: `${SERVER_PORT}`,
-    host: `${SERVER_HOST}`,
+    host: `0.0.0.0`,
   },
 }
